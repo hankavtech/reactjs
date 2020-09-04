@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.tournament_name{
+  color: white;
+  font-size:17px ;
+}
+
+.tournament_div{
+  padding-top:2px;
+  padding-bottom: 2px;
+  padding-left: 8px;
+  background: black;
+}
+
+.event{
+  color:black;
+  font-size: 14px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.event_div{
+  background: white;
+  padding-left: 8px;
+  border:1px solid gray;
+}
+
+
+.selected.sport_icon{
+  background-color: rgb(62, 155, 131);
+  border:1px solid black;
+}
+
+.sport_icon:hover{
+  background-color: black;
+}
+
+.icon_div{
+  display: inline;
+}
+
