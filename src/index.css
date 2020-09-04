@@ -46,7 +46,11 @@ code {
   background-color: black;
 }
 
-.icon_div{
+.icon_div,.icon_item{
   display: inline;
+}
+.icon_list{
+  margin-left: 0px;
+  padding-left: 0px;
 }
 

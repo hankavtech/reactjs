@@ -29,7 +29,7 @@ export default class Tournaments extends Component {
 
 
     render() {    
-        const tournamentDivItems=this.props.tournaments.map(item => <div><div className="tournament_div"><thead><p className="tournament_name">{item.event_name} &nbsp; &nbsp; {item.event_type}</p></thead></div><Events tournamentName={item.event_name} events={this.getEvents(item.event_name,item.event_type)}/></div>);
+        const tournamentDivItems=this.props.tournaments.map(item => <div><div className="tournament_div"><p className="tournament_name">{item.event_name} &nbsp; &nbsp; {item.event_type}</p></div><Events tournamentName={item.event_name} events={this.getEvents(item.event_name,item.event_type)}/></div>);
         return <div>{tournamentDivItems}</div>;
     }
     

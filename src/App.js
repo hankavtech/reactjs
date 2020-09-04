@@ -1,19 +1,24 @@
-import React, { Component } from 'react'
-import SportIcons from './components/SportIcons'
-import Tournaments from './components/Tournaments'
+import React from "react";
+import { BrowserRouter as Router,Switch, Route,Link} from 'react-router-dom';
 
-export default class App extends Component {
+import Tournaments from './components/Tournaments';
+
+
+export default class RouteApp extends React.Component{
+
 
   constructor(props){
     super(props);
-    this.changeSport = this.changeSport.bind(this);
-    this.state={tournaments:[],events:[],sport:'soccer'};
-    this.getData('soccer');
-}
+    this.state={currentSport:'soccer',events:[],tournaments:[]};
+    this.fetchContent('soccer');
+  }
 
+  updateContent = (sport) => {
+    this.setState({currentSport:sport},this.fetchContent(sport))
+  }
 
-  getData = (sportName) => {
-    const url = `http://www.localhost:8000/${sportName}/`;
+  fetchContent = (sport) =>{
+    const url = `http://www.localhost:8000/${sport}/`;
     fetch(url, {
         // mode: 'no-cors',
         method: 'GET',
@@ -32,7 +37,7 @@ export default class App extends Component {
     for (index = 0; index < this.state.events.length; ++index) {
         var event=this.state.events[index];
         var uniqueCombination="";
-        switch(this.state.sport){
+        switch(this.state.currentSport){
           case 'tennis':
             uniqueCombination=this.state.events[index].event_type+this.state.events[index].event_name;
             break;
@@ -44,7 +49,7 @@ export default class App extends Component {
         
         if (!flags[uniqueCombination]) {
             flags[uniqueCombination] = true;
-            switch(this.state.sport){
+            switch(this.state.currentSport){
               case 'tennis':
                 uniqueTournaments.push({'event_name':event.event_name,'event_type':event.event_type});
                 break;
@@ -64,20 +69,28 @@ export default class App extends Component {
     });
 
   }
-
-  changeSport = (sportName) => {
-    this.setState({sport:sportName},this.getData(sportName));
-    
-  }
-
-
-
+  
   render() {
+    let sports=['soccer','tennis','basketball','cricket','baseball','hockey'];
+    const linkDivs=sports.map(item => <li class="icon_item"><Link to={`/${item}`}> <div className="icon_div"><button className={this.state.currentSport===item ? 'btn sport_icon selected':'btn sport_icon' } onClick={this.updateContent.bind(this,item)}><img src={`./images/${item}.svg`} alt={item} style={{width:'50px',height:'40px'}}/></button></div></Link></li> );
+    const RouteDivs=sports.map(item =>  <Route path={`/${item}`}><div><Tournaments currentSport={this.state.currentSport} tournaments={this.state.tournaments} events={this.state.events}/></div></Route>)
     return (
+    <Router>
       <div>
-        <SportIcons currentSport={this.state.sport} changeActiveSport={this.changeSport} />
-        <Tournaments currentSport={this.state.sport} tournaments={this.state.tournaments} events={this.state.events}/>
+        <nav>
+          <ul className="icon_list">
+            {linkDivs}
+          </ul>
+        </nav>
+
+        <Switch>         
+          {RouteDivs}
+        </Switch>
       </div>
+    </Router>
     )
   }
-}
+
+
+};
+
